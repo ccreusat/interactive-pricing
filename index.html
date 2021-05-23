@@ -10,40 +10,33 @@
   <link rel="stylesheet" href="styles.css">
   
   <title>Frontend Mentor | Interactive pricing component</title>
-
-  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
-  <!-- <style>
-    .attribution { font-size: 11px; text-align: center; }
-    .attribution a { color: hsl(228, 45%, 44%); }
-  </style> -->
-  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
 </head>
 <body>
 
   <div id="app">
 
-    <header>
-      <h1>Simple, traffic-based pricing</h1>
-      <p>Sign-up for our 30-day trial. No credit card required.</p> 
+    <header class="header">
+      <h1 class="header__heading">Simple, traffic-based pricing</h1>
+      <p class="header__text">Sign-up for our 30-day trial. No credit card required.</p> 
     </header>
 
-    <form class="component">
-      <div class="component__header">
+    <form class="interactive">
+      <div class="interactive__body">
 
-        <div class="component__views">
-          <strong><span class="views">10K</span> Pageviews</strong>
+        <div class="interactive__views">
+          <strong><span class="views js-views">10K</span> Pageviews</strong>
+        </div>
+
+        <div class="interactive__price">
+          <strong class="js-price">$16.00</strong><small> / month</small>
         </div>
 
         <div class="progress-bar">
-          <span style="width:10%"></span>
-          <input id="slider-range" class="component__slider" type="range" min="1" max="5" step="1" value="3">
+          <span class="js-progress" style="width:10%"></span>
+          <input id="slider-range" class="interactive__slider js-slider" type="range" min="1" max="5" step="1" value="3">
         </div>
 
-        <div class="component__price">
-          <strong>$16.00</strong><small> / month</small>
-        </div>
-
-        <div class="component__billing">
+        <div class="interactive__billing">
           <label for="billing">
             Monthly Billing
             <input type="checkbox" id="billing" name="billing">
@@ -53,9 +46,11 @@
         </div>
       </div>
 
-      <div class="component__footer">
-        <ul class="component__list">
-          <li class="component__item" v-for="item in items">{{ item.text }}</li>
+      <div class="interactive__footer">
+        <ul class="interactive__list">
+          <li class="interactive__item" v-for="item in items">Unlimited websites</li>
+          <li class="interactive__item" v-for="item in items">100% data ownership</li>
+          <li class="interactive__item" v-for="item in items">Email reports</li>
         </ul>
 
         <button type="submit" class="button">Start my trial</button>
@@ -63,79 +58,13 @@
     </form>
   </div>
   
-  <!-- <div class="attribution">
+  <div class="attribution">
     Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
-    Coded by <a href="#">Your Name Here</a>.
-  </div> -->
+    Coded by <a href="https://github.com/ccreusat">Clement Creusat</a>.
+  </div>
+  <script src="interactive-range.js"></script>
   <script>
-    var app = new Vue({
-    el: '#app',
-    data: {
-      message: 'Hello Vue!',
-      items: [
-        { text: 'Unlimited websites' },
-        { text: '100% data ownership' },
-        { text: 'Email reports' }
-      ]
-    }
-  })
-  </script>
-  <script>
-    const sliderContainer = document.querySelector('.component__slider');
-    const priceContainer = document.querySelector('.component__price strong');
-    const viewsContainer = document.querySelector('.views');
-    const progressBar = document.querySelector('.progress-bar span');
-    const checkbox = document.getElementById('billing');
-    let discount = 1;
-
-    function getInfo() {
-      let value = parseInt(sliderContainer.value);
-      switch(value) {
-        case 1:
-          viewsContainer.innerHTML = "10K";
-          progressBar.style.width = 0 + "%";
-          priceContainer.innerHTML = setPrice(8);
-          break;
-        case 2:
-          viewsContainer.innerHTML = "50K";
-          progressBar.style.width = 25 + "%";
-          priceContainer.innerHTML = setPrice(12);
-          break;
-        case 3:
-          viewsContainer.innerHTML = "100K";
-          progressBar.style.width = 50 + "%";
-          priceContainer.innerHTML = setPrice(16);
-          break;
-        case 4:
-          viewsContainer.innerHTML = "500K";
-          progressBar.style.width = 75 + "%";
-          priceContainer.innerHTML = setPrice(24);
-          break;
-        case 5:
-          viewsContainer.innerHTML = "1M";
-          progressBar.style.width = 100 + "%";
-          priceContainer.innerHTML = setPrice(36);
-          break;
-        default:
-          viewsContainer.innerHTML = "100K";
-          progressBar.style.width = 50 + "%";
-          priceContainer.innerHTML = setPrice(8);
-      }
-    }
-
-    function setPrice(price) {
-      return "$" + price * discount + ".00";
-    }
-
-    function applyDiscount() {
-      if ( checkbox.checked === true ) discount = 0.75;
-      if ( checkbox.checked === false ) discount = 1;
-      getInfo();
-    }
-
-    window.addEventListener("DOMContentLoaded", getInfo());
-    sliderContainer.oninput = () => getInfo(sliderContainer);
-    checkbox.onclick = () => applyDiscount();
+    window.addEventListener("DOMContentLoaded", interactiveRange());
   </script>
 </body>
 </html>
