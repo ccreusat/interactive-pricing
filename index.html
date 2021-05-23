@@ -10,17 +10,15 @@
   <link rel="stylesheet" href="styles.css">
   
   <title>Frontend Mentor | Interactive pricing component</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
 </head>
 <body>
 
   <div id="app">
 
-    <header class="header">
-      <h1 class="header__heading">Simple, traffic-based pricing</h1>
-      <p class="header__text">Sign-up for our 30-day trial. No credit card required.</p> 
-    </header>
+    <header-app></header-app>
 
-    <form class="interactive">
+    <form class="interactive" v-on:submit.prevent="onSubmit">
       <div class="interactive__body">
 
         <div class="interactive__views">
@@ -33,7 +31,7 @@
 
         <div class="progress-bar">
           <span class="js-progress" style="width:10%"></span>
-          <input id="slider-range" class="interactive__slider js-slider" type="range" min="1" max="5" step="1" value="3">
+          <input class="interactive__slider js-slider" type="range" min="1" max="5" step="1" value="3">
         </div>
 
         <div class="interactive__billing">
@@ -48,20 +46,59 @@
 
       <div class="interactive__footer">
         <ul class="interactive__list">
-          <li class="interactive__item" v-for="item in items">Unlimited websites</li>
-          <li class="interactive__item" v-for="item in items">100% data ownership</li>
-          <li class="interactive__item" v-for="item in items">Email reports</li>
+          <footer-item v-for="item in items" v-bind:item="item" v-bind:key="item.id"></footer-item>
         </ul>
-
-        <button type="submit" class="button">Start my trial</button>
+        <button v-on:click="confirmSubscription" class="button">Start my trial</button>
       </div>
     </form>
-  </div>
   
-  <div class="attribution">
-    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
-    Coded by <a href="https://github.com/ccreusat">Clement Creusat</a>.
+    <div class="attribution">
+      Challenge by <a v-bind:href="mentor" target="_blank">Frontend Mentor</a>. 
+      Coded by <a v-bind:href="github">Clement Creusat</a>.
+    </div>
   </div>
+
+  <!-- SCRIPTS -->
+  <script>
+    Vue.component('footer-item', {
+      props: ["item"],
+      template: '<li class="interactive__item">{{ item.text }}</li>'
+    });
+
+    Vue.component('header-app', {
+      data: function () {
+        return {
+          heading: "Simple, traffic-based pricing",
+          text: "Sign-up for our 30-day trial. No credit card required.",
+        }
+      },
+      template: `
+        <header class="header">
+          <h1 class="header__heading">{{ heading }}</h1>
+          <p class="header__text">{{ text }}</p> 
+        </header>
+      `
+    })
+
+    var app = new Vue({
+      el: '#app',
+      data: {
+        mentor: "https://www.frontendmentor.io?ref=challenge",
+        github: "https://github.com/ccreusat",
+        message: 'Hello Vue!',
+        items: [
+          { id: 0, text: 'Unlimited websites' },
+          { id: 1, text: '100% data ownership' },
+          { id: 2, text: 'Email reports' }
+        ]
+      },
+      methods: {
+        confirmSubscription: () => {
+          this.message = alert('Your subscription is completed!');
+        }
+      }
+    })
+  </script>
   <script src="interactive-range.js"></script>
   <script>
     window.addEventListener("DOMContentLoaded", interactiveRange());
