@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  
+  <title>Frontend Mentor | Interactive pricing component</title>
+
+  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+  <!-- <style>
+    .attribution { font-size: 11px; text-align: center; }
+    .attribution a { color: hsl(228, 45%, 44%); }
+  </style> -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+</head>
+<body>
+
+  <div id="app">
+
+    <header>
+      <h1>Simple, traffic-based pricing</h1>
+      <p>Sign-up for our 30-day trial. No credit card required.</p> 
+    </header>
+
+    <form class="component">
+      <div class="component__header">
+
+        <div class="component__views">
+          <strong><span class="views">10K</span> Pageviews</strong>
+        </div>
+
+        <div class="progress-bar">
+          <span style="width:10%"></span>
+          <input id="slider-range" class="component__slider" type="range" min="1" max="5" step="1" value="3">
+        </div>
+
+        <div class="component__price">
+          <strong>$16.00</strong><small> / month</small>
+        </div>
+
+        <div class="component__billing">
+          <label for="billing">
+            Monthly Billing
+            <input type="checkbox" id="billing" name="billing">
+            <span class="checkbox"></span>
+            Yearly Billing <span class="badge">-25% <span>discount</span></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="component__footer">
+        <ul class="component__list">
+          <li class="component__item" v-for="item in items">{{ item.text }}</li>
+        </ul>
+
+        <button type="submit" class="button">Start my trial</button>
+      </div>
+    </form>
+  </div>
+  
+  <!-- <div class="attribution">
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
+    Coded by <a href="#">Your Name Here</a>.
+  </div> -->
+  <script>
+    var app = new Vue({
+    el: '#app',
+    data: {
+      message: 'Hello Vue!',
+      items: [
+        { text: 'Unlimited websites' },
+        { text: '100% data ownership' },
+        { text: 'Email reports' }
+      ]
+    }
+  })
+  </script>
+  <script>
+    const sliderContainer = document.querySelector('.component__slider');
+    const priceContainer = document.querySelector('.component__price strong');
+    const viewsContainer = document.querySelector('.views');
+    const progressBar = document.querySelector('.progress-bar span');
+    const checkbox = document.getElementById('billing');
+    let discount = 1;
+
+    function getInfo() {
+      let value = parseInt(sliderContainer.value);
+      switch(value) {
+        case 1:
+          viewsContainer.innerHTML = "10K";
+          progressBar.style.width = 0 + "%";
+          priceContainer.innerHTML = setPrice(8);
+          break;
+        case 2:
+          viewsContainer.innerHTML = "50K";
+          progressBar.style.width = 25 + "%";
+          priceContainer.innerHTML = setPrice(12);
+          break;
+        case 3:
+          viewsContainer.innerHTML = "100K";
+          progressBar.style.width = 50 + "%";
+          priceContainer.innerHTML = setPrice(16);
+          break;
+        case 4:
+          viewsContainer.innerHTML = "500K";
+          progressBar.style.width = 75 + "%";
+          priceContainer.innerHTML = setPrice(24);
+          break;
+        case 5:
+          viewsContainer.innerHTML = "1M";
+          progressBar.style.width = 100 + "%";
+          priceContainer.innerHTML = setPrice(36);
+          break;
+        default:
+          viewsContainer.innerHTML = "100K";
+          progressBar.style.width = 50 + "%";
+          priceContainer.innerHTML = setPrice(8);
+      }
+    }
+
+    function setPrice(price) {
+      return "$" + price * discount + ".00";
+    }
+
+    function applyDiscount() {
+      if ( checkbox.checked === true ) discount = 0.75;
+      if ( checkbox.checked === false ) discount = 1;
+      getInfo();
+    }
+
+    window.addEventListener("DOMContentLoaded", getInfo());
+    sliderContainer.oninput = () => getInfo(sliderContainer);
+    checkbox.onclick = () => applyDiscount();
+  </script>
+</body>
+</html>
