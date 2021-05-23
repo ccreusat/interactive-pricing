@@ -28,7 +28,7 @@ Users should be able to:
 
 ### Screenshot
 
-![](./screenshot.jpg)
+![](https://ccreusat-interactive-pricing/images/solution.png)
 
 ### Links
 
