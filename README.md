@@ -32,7 +32,7 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [Solution page](https://your-solution-url.com)
+- Solution URL: [Solution page](https://www.frontendmentor.io/solutions/interactive-pricing-with-cross-browser-input-range-8xim_oKXD)
 - Live Site URL: [Live site](https://your-live-site-url.com)
 
 ## My process
